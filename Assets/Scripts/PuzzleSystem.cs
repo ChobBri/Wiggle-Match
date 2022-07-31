@@ -14,6 +14,8 @@ namespace PZL.Core
         [SerializeField] PieceSetMover mover;
         [SerializeField] Board board;
 
+        bool isClearing = false;
+
         private void Start()
         {
             mover.OnPieceCollision += ProcessPieceClear;
@@ -32,7 +34,7 @@ namespace PZL.Core
                     entryDelayTime = 0.0f;
                 } else
                 {
-                    entryDelayTime += Time.deltaTime;
+                    if(!isClearing)entryDelayTime += Time.deltaTime;
                 }
             }
         }
@@ -43,6 +45,7 @@ namespace PZL.Core
             for (int i = 0; i < pieceSetPieces.Length; i++)
             {
                 pieceSetPieces[i] = Instantiate(gamePieces[Random.Range(0, gamePieces.Length)], board.gameObject.transform).GetComponent<Piece>();
+                pieceSetPieces[i].GetComponent<SpriteRenderer>().sortingOrder = pieceSetPieces.Length - i;
                 pieceSetPieces[i].BoardPosition = new Vector2Int(Board.Width / 2, 0);
                 pieceSetPieces[i].transform.position = board.CellToWorld(pieceSetPieces[i].BoardPosition);
 
@@ -58,19 +61,26 @@ namespace PZL.Core
 
         IEnumerator ProcessPieceClearCoroutine(Piece[] pieces)
         {
+            isClearing = true;
             while (true)
             {
                 foreach (var piece in pieces)
                 {
+
                     if (AdjacentColorSize(piece.BoardPosition, piece.Color) >= 4)
                     {
                         PieceClear(piece.BoardPosition, piece.Color);
                     }
                 }
+                yield return new WaitForSeconds(0.5f);
 
-                if (board.GravityDrop()) yield return new WaitForSeconds(1.0f);
-                else yield break;
+                Piece[] changedPieces = board.GravityDrop();
+                if (changedPieces.Length > 0) yield return new WaitForSeconds(0.5f);
+                else break;
+
+                pieces = changedPieces;
             }
+            isClearing = false;
         }
 
         private int AdjacentColorSize(Vector2Int boardPosition, PieceColor color, bool[,] memo = null)

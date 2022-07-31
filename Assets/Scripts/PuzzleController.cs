@@ -30,11 +30,11 @@ namespace PZL.Controls
                     moveRateTime = 0.0f;
                 } else
                 {
-                    if (Input.GetKeyDown(KeyCode.RightArrow))
+                    if (Input.GetKeyDown(KeyCode.RightArrow) && directionBuffer != Vector2Int.left)
                     {
                         directionBuffer = Vector2Int.right;
                     }
-                    else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    else if (Input.GetKeyDown(KeyCode.LeftArrow) && directionBuffer != Vector2Int.right)
                     {
                         directionBuffer = Vector2Int.left;
                     } else if (Input.GetKeyDown(KeyCode.UpArrow))

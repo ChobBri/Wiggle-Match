@@ -33,9 +33,9 @@ namespace PZL.Core
         /// Applies gravity on all pieces.
         /// Returns whether the board state was changed.
         /// </summary>
-        public bool GravityDrop()
+        public Piece[] GravityDrop()
         {
-            bool stateChanged = false;
+            List<Piece> changedPieces = new();
             for (int row = Board.Height - 1; row >= 0; row--)
             {
                 for (int col = 0; col < Board.Width; col++)
@@ -43,21 +43,25 @@ namespace PZL.Core
                     Piece currentPiece = cells[col, row];
                     if (currentPiece == null) continue;
 
+                    bool hasChangedState = false;
+
                     for (int height = currentPiece.BoardPosition.y + 1; height < Board.Height; height++)
                     {
                         Vector2Int nextPosition = new Vector2Int(currentPiece.BoardPosition.x, height);
                         if (IsEmpty(nextPosition))
                         {
-                            stateChanged = true;
+                            hasChangedState = true;
                             UnassignPiece(currentPiece.BoardPosition);
                             currentPiece.BoardPosition = nextPosition;
                             AssignPiece(currentPiece);
                         }
                     }
+
+                    if (hasChangedState) changedPieces.Add(currentPiece);
                     currentPiece.transform.position = CellToWorld(currentPiece.BoardPosition);
                 }
             }
-            return stateChanged;
+            return changedPieces.ToArray();
         }
 
         public void AssignPiece(Piece piece)
