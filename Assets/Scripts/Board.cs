@@ -29,12 +29,50 @@ namespace PZL.Core
             return cells[boardPosition.x, boardPosition.y].Color;
         }
 
+        /// <summary>
+        /// Applies gravity on all pieces.
+        /// Returns whether the board state was changed.
+        /// </summary>
+        public bool GravityDrop()
+        {
+            bool stateChanged = false;
+            for (int row = Board.Height - 1; row >= 0; row--)
+            {
+                for (int col = 0; col < Board.Width; col++)
+                {
+                    Piece currentPiece = cells[col, row];
+                    if (currentPiece == null) continue;
+
+                    for (int height = currentPiece.BoardPosition.y + 1; height < Board.Height; height++)
+                    {
+                        Vector2Int nextPosition = new Vector2Int(currentPiece.BoardPosition.x, height);
+                        if (IsEmpty(nextPosition))
+                        {
+                            stateChanged = true;
+                            UnassignPiece(currentPiece.BoardPosition);
+                            currentPiece.BoardPosition = nextPosition;
+                            AssignPiece(currentPiece);
+                        }
+                    }
+                    currentPiece.transform.position = CellToWorld(currentPiece.BoardPosition);
+                }
+            }
+            return stateChanged;
+        }
+
         public void AssignPiece(Piece piece)
         {
             cells[piece.BoardPosition.x, piece.BoardPosition.y] = piece;
         }
 
-        public void UnassignPiece(Vector2Int boardPosition)
+        public Piece UnassignPiece(Vector2Int boardPosition)
+        {
+            Piece returnPiece = cells[boardPosition.x, boardPosition.y];
+            cells[boardPosition.x, boardPosition.y] = null;
+            return returnPiece;
+        }
+
+        public void DestroyPiece(Vector2Int boardPosition)
         {
             Destroy(cells[boardPosition.x, boardPosition.y].gameObject);
             cells[boardPosition.x, boardPosition.y] = null;

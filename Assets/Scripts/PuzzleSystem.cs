@@ -53,12 +53,23 @@ namespace PZL.Core
 
         private void ProcessPieceClear(Piece[] pieces)
         {
-            foreach(var piece in pieces)
+            StartCoroutine(ProcessPieceClearCoroutine(pieces));
+        }
+
+        IEnumerator ProcessPieceClearCoroutine(Piece[] pieces)
+        {
+            while (true)
             {
-                if(AdjacentColorSize(piece.BoardPosition, piece.Color) >= 4)
+                foreach (var piece in pieces)
                 {
-                    PieceClear(piece.BoardPosition, piece.Color);
+                    if (AdjacentColorSize(piece.BoardPosition, piece.Color) >= 4)
+                    {
+                        PieceClear(piece.BoardPosition, piece.Color);
+                    }
                 }
+
+                if (board.GravityDrop()) yield return new WaitForSeconds(1.0f);
+                else yield break;
             }
         }
 
@@ -91,7 +102,7 @@ namespace PZL.Core
                 return;
             memo[boardPosition.x, boardPosition.y] = true;
 
-            board.UnassignPiece(boardPosition);
+            board.DestroyPiece(boardPosition);
 
             if (boardPosition.x > 0) PieceClear(boardPosition + Vector2Int.left, color, memo);
             if (boardPosition.x < Board.Width - 1) PieceClear(boardPosition + Vector2Int.right, color, memo);
