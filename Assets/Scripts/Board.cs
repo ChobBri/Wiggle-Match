@@ -16,11 +16,29 @@ namespace PZL.Core
         {
             grid = GetComponent<Grid>();
             cells = new Piece[Width, Height];
+
+        }
+
+        private void Start()
+        {
+            int length = transform.childCount;
+            for (int i = 0; i < length; i++)
+            {
+                Piece piece = transform.GetChild(i).GetComponent<Piece>();
+                piece.BoardPosition = WorldToCell(piece.transform.position);
+                AssignPiece(piece);
+                piece.transform.position = CellToWorld(piece.BoardPosition);
+            }
         }
 
         public Vector2 CellToWorld(Vector2Int cellPosition)
         {
             return grid.CellToWorld((Vector3Int) cellPosition) + grid.cellSize/2.0f;
+        }
+
+        public Vector2Int WorldToCell(Vector2 worldPosition)
+        {
+            return (Vector2Int) grid.WorldToCell(worldPosition);
         }
 
         public PieceColor GetColor(Vector2Int boardPosition)
@@ -42,6 +60,7 @@ namespace PZL.Core
                 {
                     Piece currentPiece = cells[col, row];
                     if (currentPiece == null) continue;
+                    if (currentPiece.IsStatic) continue;
 
                     bool hasChangedState = false;
 
@@ -54,6 +73,9 @@ namespace PZL.Core
                             UnassignPiece(currentPiece.BoardPosition);
                             currentPiece.BoardPosition = nextPosition;
                             AssignPiece(currentPiece);
+                        } else
+                        {
+                            break;
                         }
                     }
 
@@ -62,6 +84,20 @@ namespace PZL.Core
                 }
             }
             return changedPieces.ToArray();
+        }
+
+        public bool HasStaticPiece()
+        {
+            for(int row = Height - 1; row >= 0; row--)
+            {
+                for(int col = 0; col < Width; col++)
+                {
+                    Piece piece = cells[col, row];
+                    if (piece == null) continue;
+                    if (piece.IsStatic) return true;
+                }
+            }
+            return false;
         }
 
         public void AssignPiece(Piece piece)

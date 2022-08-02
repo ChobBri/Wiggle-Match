@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PZL.Movement;
+using UnityEngine.SceneManagement;
 
 namespace PZL.Core
 {
@@ -16,9 +17,16 @@ namespace PZL.Core
 
         bool isClearing = false;
 
+
+
         private void Start()
         {
             mover.OnPieceCollision += ProcessPieceClear;
+        }
+
+        private void OnDestroy()
+        {
+            mover.OnPieceCollision -= ProcessPieceClear;
         }
 
         private void Update()
@@ -34,7 +42,7 @@ namespace PZL.Core
                     entryDelayTime = 0.0f;
                 } else
                 {
-                    if(!isClearing)entryDelayTime += Time.deltaTime;
+                    if(!isClearing) entryDelayTime += Time.deltaTime;
                 }
             }
         }
@@ -81,6 +89,11 @@ namespace PZL.Core
                 pieces = changedPieces;
             }
             isClearing = false;
+
+            if (!board.HasStaticPiece())
+            {
+                MoveToNextLevel();
+            }
         }
 
         private int AdjacentColorSize(Vector2Int boardPosition, PieceColor color, bool[,] memo = null)
@@ -118,6 +131,14 @@ namespace PZL.Core
             if (boardPosition.x < Board.Width - 1) PieceClear(boardPosition + Vector2Int.right, color, memo);
             if (boardPosition.y > 0) PieceClear(boardPosition + Vector2Int.down, color, memo);
             if (boardPosition.y < Board.Height - 1) PieceClear(boardPosition + Vector2Int.up, color, memo);
+        }
+
+        private void MoveToNextLevel()
+        {
+            int buildIndex = SceneManager.GetActiveScene().buildIndex;
+            buildIndex += 1;
+            buildIndex %= SceneManager.sceneCount;
+            SceneManager.LoadScene(buildIndex);
         }
     }
 }

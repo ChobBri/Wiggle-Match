@@ -8,6 +8,8 @@ namespace PZL.Core
     public class Piece : MonoBehaviour
     {
         [SerializeField] PieceColor color;
+        [SerializeField] bool isStatic;
+        public bool IsStatic { get => isStatic; }
         public PieceColor Color { get => color; }
         public Vector2Int BoardPosition { get; set; }
 
