@@ -9,6 +9,7 @@ namespace PZL.Core
     {
         [SerializeField] PieceColor color;
         [SerializeField] bool isStatic;
+        public Vector2 velocity { get; set; } = Vector2.zero;
         public bool IsStatic { get => isStatic; }
         public PieceColor Color { get => color; }
         public Vector2Int BoardPosition { get; set; }

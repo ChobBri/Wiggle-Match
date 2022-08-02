@@ -51,7 +51,7 @@ namespace PZL.Core
         /// Applies gravity on all pieces.
         /// Returns whether the board state was changed.
         /// </summary>
-        public Piece[] GravityDrop()
+        public IEnumerator GravityDrop(Piece[] returnPieces)
         {
             List<Piece> changedPieces = new();
             for (int row = Height - 1; row >= 0; row--)
@@ -80,10 +80,43 @@ namespace PZL.Core
                     }
 
                     if (hasChangedState) changedPieces.Add(currentPiece);
-                    currentPiece.transform.position = CellToWorld(currentPiece.BoardPosition);
+                    //currentPiece.transform.position = CellToWorld(currentPiece.BoardPosition);
                 }
             }
-            return changedPieces.ToArray();
+
+            returnPieces = changedPieces.ToArray();
+
+            yield return SimulateGravityDrop(returnPieces);
+            yield return null;
+        }
+
+        private IEnumerator SimulateGravityDrop(Piece[] changedPieces)
+        {
+            Vector2 GRAVITY = new Vector2(0.0f, 0.1f);
+            bool isDropping = true;
+            while (isDropping)
+            {
+                isDropping = false;
+                foreach(var piece in changedPieces)
+                {
+                    piece.velocity += GRAVITY * Time.deltaTime;
+                    piece.transform.position += (Vector3) piece.velocity;
+                    if(piece.transform.position.y >= CellToWorld(piece.BoardPosition).y)
+                    {
+                        piece.transform.position = CellToWorld(piece.BoardPosition);
+                    } else
+                    {
+                        isDropping = true;
+                    }
+                }
+                yield return null;
+            }
+
+            foreach(var piece in changedPieces)
+            {
+                piece.velocity = Vector2.zero;
+            }
+            yield return null;
         }
 
         public bool HasStaticPiece()
