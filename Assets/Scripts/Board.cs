@@ -7,7 +7,7 @@ namespace PZL.Core
     public class Board : MonoBehaviour
     {
         public int Width { get; } = 7;
-        public int Height { get; } = 12;
+        public int Height { get; } = 14;
 
         private Piece[,] cells;
         public Grid grid;
@@ -51,7 +51,7 @@ namespace PZL.Core
         /// Applies gravity on all pieces.
         /// Returns whether the board state was changed.
         /// </summary>
-        public IEnumerator GravityDrop(Piece[] returnPieces)
+        public IEnumerator GravityDrop(System.Action<Piece[]> pieceSetter)
         {
             List<Piece> changedPieces = new();
             for (int row = Height - 1; row >= 0; row--)
@@ -84,9 +84,10 @@ namespace PZL.Core
                 }
             }
 
-            returnPieces = changedPieces.ToArray();
-
+            Piece[] returnPieces = changedPieces.ToArray();
             yield return SimulateGravityDrop(returnPieces);
+            pieceSetter(returnPieces);
+
             yield return null;
         }
 

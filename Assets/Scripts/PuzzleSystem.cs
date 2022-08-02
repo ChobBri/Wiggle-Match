@@ -72,19 +72,20 @@ namespace PZL.Core
             isClearing = true;
             while (true)
             {
+                bool hasCleared = false;
                 foreach (var piece in pieces)
                 {
-
                     if (AdjacentColorSize(piece.BoardPosition, piece.Color) >= 4)
                     {
+                        hasCleared = true;
                         PieceClear(piece.BoardPosition, piece.Color);
                     }
                 }
-                yield return new WaitForSeconds(0.3f);
+                if(hasCleared) yield return new WaitForSeconds(0.3f);
 
                 Piece[] changedPieces = new Piece[0];
-                yield return StartCoroutine(board.GravityDrop(changedPieces));
-                if (changedPieces.Length > 0) yield return new WaitForSeconds(0.5f);
+                yield return StartCoroutine(board.GravityDrop( arr => changedPieces = arr ));
+                if (changedPieces.Length > 0) yield return new WaitForSeconds(0.3f);
                 else break;
 
                 pieces = changedPieces;
