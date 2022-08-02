@@ -54,7 +54,7 @@ namespace PZL.Core
             {
                 pieceSetPieces[i] = Instantiate(gamePieces[Random.Range(0, gamePieces.Length)], board.gameObject.transform).GetComponent<Piece>();
                 pieceSetPieces[i].GetComponent<SpriteRenderer>().sortingOrder = pieceSetPieces.Length - i;
-                pieceSetPieces[i].BoardPosition = new Vector2Int(Board.Width / 2, 0);
+                pieceSetPieces[i].BoardPosition = new Vector2Int(board.Width / 2, 0);
                 pieceSetPieces[i].transform.position = board.CellToWorld(pieceSetPieces[i].BoardPosition);
 
             }
@@ -98,7 +98,7 @@ namespace PZL.Core
 
         private int AdjacentColorSize(Vector2Int boardPosition, PieceColor color, bool[,] memo = null)
         {
-            if (memo == null) memo = new bool[Board.Width, Board.Height];
+            if (memo == null) memo = new bool[board.Width, board.Height];
 
             if (memo[boardPosition.x, boardPosition.y] == true ||
                 board.IsEmpty(boardPosition) || 
@@ -108,16 +108,16 @@ namespace PZL.Core
 
             int sum = 1;
             if (boardPosition.x > 0) sum += AdjacentColorSize(boardPosition + Vector2Int.left, color, memo);
-            if (boardPosition.x < Board.Width - 1) sum += AdjacentColorSize(boardPosition + Vector2Int.right, color, memo);
+            if (boardPosition.x < board.Width - 1) sum += AdjacentColorSize(boardPosition + Vector2Int.right, color, memo);
             if (boardPosition.y > 0) sum += AdjacentColorSize(boardPosition + Vector2Int.down, color, memo);
-            if (boardPosition.y < Board.Height - 1) sum += AdjacentColorSize(boardPosition + Vector2Int.up, color, memo);
+            if (boardPosition.y < board.Height - 1) sum += AdjacentColorSize(boardPosition + Vector2Int.up, color, memo);
 
             return sum;
         }
 
         private void PieceClear(Vector2Int boardPosition, PieceColor color, bool[,] memo = null)
         {
-            if (memo == null) memo = new bool[Board.Width, Board.Height];
+            if (memo == null) memo = new bool[board.Width, board.Height];
 
             if (memo[boardPosition.x, boardPosition.y] == true ||
                 board.IsEmpty(boardPosition) ||
@@ -128,9 +128,9 @@ namespace PZL.Core
             board.DestroyPiece(boardPosition);
 
             if (boardPosition.x > 0) PieceClear(boardPosition + Vector2Int.left, color, memo);
-            if (boardPosition.x < Board.Width - 1) PieceClear(boardPosition + Vector2Int.right, color, memo);
+            if (boardPosition.x < board.Width - 1) PieceClear(boardPosition + Vector2Int.right, color, memo);
             if (boardPosition.y > 0) PieceClear(boardPosition + Vector2Int.down, color, memo);
-            if (boardPosition.y < Board.Height - 1) PieceClear(boardPosition + Vector2Int.up, color, memo);
+            if (boardPosition.y < board.Height - 1) PieceClear(boardPosition + Vector2Int.up, color, memo);
         }
 
         private void MoveToNextLevel()

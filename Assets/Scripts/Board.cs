@@ -6,8 +6,8 @@ namespace PZL.Core
 {
     public class Board : MonoBehaviour
     {
-        public const int Width = 7;
-        public const int Height = 12;
+        public int Width { get; } = 7;
+        public int Height { get; } = 12;
 
         private Piece[,] cells;
         public Grid grid;
@@ -54,9 +54,9 @@ namespace PZL.Core
         public Piece[] GravityDrop()
         {
             List<Piece> changedPieces = new();
-            for (int row = Board.Height - 1; row >= 0; row--)
+            for (int row = Height - 1; row >= 0; row--)
             {
-                for (int col = 0; col < Board.Width; col++)
+                for (int col = 0; col < Width; col++)
                 {
                     Piece currentPiece = cells[col, row];
                     if (currentPiece == null) continue;
@@ -64,7 +64,7 @@ namespace PZL.Core
 
                     bool hasChangedState = false;
 
-                    for (int height = currentPiece.BoardPosition.y + 1; height < Board.Height; height++)
+                    for (int height = currentPiece.BoardPosition.y + 1; height < Height; height++)
                     {
                         Vector2Int nextPosition = new Vector2Int(currentPiece.BoardPosition.x, height);
                         if (IsEmpty(nextPosition))
