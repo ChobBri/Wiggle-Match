@@ -53,7 +53,7 @@ namespace PZL.Core
         public IEnumerator GravityDrop(System.Action<Piece[]> pieceSetter)
         {
             List<Piece> changedPieces = new();
-            for (int row = Height - 1; row >= 0; row--)
+            for (int row = 0; row < Height; row++)
             {
                 for (int col = 0; col < Width; col++)
                 {
@@ -63,7 +63,7 @@ namespace PZL.Core
 
                     bool hasChangedState = false;
 
-                    for (int height = currentPiece.BoardPosition.y + 1; height < Height; height++)
+                    for (int height = currentPiece.BoardPosition.y - 1; height >= 0; height--)
                     {
                         Vector2Int nextPosition = new Vector2Int(currentPiece.BoardPosition.x, height);
                         if (IsEmpty(nextPosition))
@@ -92,7 +92,7 @@ namespace PZL.Core
 
         private IEnumerator SimulateGravityDrop(Piece[] changedPieces)
         {
-            Vector2 GRAVITY = new Vector2(0.0f, 0.1f);
+            Vector2 GRAVITY = new Vector2(0.0f, -0.1f);
             bool isDropping = true;
             while (isDropping)
             {
@@ -101,7 +101,7 @@ namespace PZL.Core
                 {
                     piece.velocity += GRAVITY * Time.deltaTime;
                     piece.transform.position += (Vector3) piece.velocity;
-                    if(piece.transform.position.y >= CellToWorld(piece.BoardPosition).y)
+                    if(piece.transform.position.y <= CellToWorld(piece.BoardPosition).y)
                     {
                         piece.transform.position = CellToWorld(piece.BoardPosition);
                     } else
@@ -121,7 +121,7 @@ namespace PZL.Core
 
         public bool HasStaticPiece()
         {
-            for(int row = Height - 1; row >= 0; row--)
+            for(int row = 0; row < Height; row++)
             {
                 for(int col = 0; col < Width; col++)
                 {

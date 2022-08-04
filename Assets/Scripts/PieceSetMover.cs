@@ -18,7 +18,7 @@ namespace PZL.Movement
 
             Piece[] pieces = pieceSet.Pieces;
             Vector2Int futurePos = pieces[0].BoardPosition + direction;
-            if (futurePos.x < 0 || futurePos.x >= board.Width || futurePos.y >= board.Height || !board.IsEmpty(futurePos))
+            if (futurePos.x < 0 || futurePos.x >= board.Width || futurePos.y < 0 || !board.IsEmpty(futurePos))
             {
                 board.AssignPieces(pieces);
                 pieceSet = null;

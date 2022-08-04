@@ -39,7 +39,7 @@ namespace PZL.Core
                 if(entryDelayTime >= entryDelay)
                 {
                     CreateNewPieceSet();
-                    if (!board.IsEmpty(new Vector2Int(board.Width / 2, 0))) Die();
+                    if (!board.IsEmpty(new Vector2Int(board.Width / 2, board.Height - 1))) Die();
                     entryDelayTime = 0.0f;
                 } else
                 {
@@ -55,7 +55,7 @@ namespace PZL.Core
             {
                 pieceSetPieces[i] = Instantiate(gamePieces[Random.Range(0, gamePieces.Length)], board.gameObject.transform).GetComponent<Piece>();
                 pieceSetPieces[i].GetComponent<SpriteRenderer>().sortingOrder = pieceSetPieces.Length - i;
-                pieceSetPieces[i].BoardPosition = new Vector2Int(board.Width / 2, 0);
+                pieceSetPieces[i].BoardPosition = new Vector2Int(board.Width / 2, board.Height - 1);
                 pieceSetPieces[i].transform.position = board.CellToWorld(pieceSetPieces[i].BoardPosition);
 
             }

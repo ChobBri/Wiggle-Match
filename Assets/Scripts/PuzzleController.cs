@@ -11,8 +11,8 @@ namespace PZL.Controls
 
         float moveRateTime = 0.0f;
 
-        Vector2Int directionBuffer = Vector2Int.up;
-        Vector2Int previousDirectionBuffer = Vector2Int.up;
+        Vector2Int directionBuffer = Vector2Int.down;
+        Vector2Int previousDirectionBuffer = Vector2Int.down;
 
         PieceSetMover mover;
 
@@ -39,9 +39,9 @@ namespace PZL.Controls
                     else if (Input.GetKeyDown(KeyCode.LeftArrow) && previousDirectionBuffer != Vector2Int.right)
                     {
                         directionBuffer = Vector2Int.left;
-                    } else if (Input.GetKeyDown(KeyCode.UpArrow))
+                    } else if (Input.GetKeyDown(KeyCode.DownArrow))
                     {
-                        directionBuffer = Vector2Int.up;
+                        directionBuffer = Vector2Int.down;
                     }
 
                     moveRateTime += Time.deltaTime;
@@ -58,7 +58,7 @@ namespace PZL.Controls
                 }
                 else
                 {
-                    directionBuffer = Vector2Int.up;
+                    directionBuffer = Vector2Int.down;
                 }
                 moveRateTime = 0.0f;
             }
