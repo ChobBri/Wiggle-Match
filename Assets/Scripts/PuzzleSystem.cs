@@ -14,6 +14,7 @@ namespace PZL.Core
         [SerializeField] GameObject[] gamePieces;
         [SerializeField] PieceSetMover mover;
         [SerializeField] Board board;
+        [SerializeField] PieceQueue pieceQueue;
 
         bool isClearing = false;
 
@@ -22,6 +23,7 @@ namespace PZL.Core
         private void Start()
         {
             mover.OnPieceCollision += ProcessPieceClear;
+            pieceQueue.InitFill(gamePieces);
         }
 
         private void OnDestroy()
@@ -38,7 +40,7 @@ namespace PZL.Core
             {
                 if(entryDelayTime >= entryDelay)
                 {
-                    CreateNewPieceSet();
+                    DeployPieceSet();
                     if (!board.IsEmpty(new Vector2Int(board.Width / 2, board.Height - 1))) Die();
                     entryDelayTime = 0.0f;
                 } else
@@ -48,19 +50,19 @@ namespace PZL.Core
             }
         }
 
-        private void CreateNewPieceSet()
+        private PieceSet DeployPieceSet()
         {
-            Piece[] pieceSetPieces = new Piece[3];
-            for (int i = 0; i < pieceSetPieces.Length; i++)
+            PieceSet nextPieceSet = pieceQueue.RetrieveNextPieceSet(gamePieces);
+            for (int i = 0; i < nextPieceSet.Pieces.Length; i++)
             {
-                pieceSetPieces[i] = Instantiate(gamePieces[Random.Range(0, gamePieces.Length)], board.gameObject.transform).GetComponent<Piece>();
-                pieceSetPieces[i].GetComponent<SpriteRenderer>().sortingOrder = pieceSetPieces.Length - i;
-                pieceSetPieces[i].BoardPosition = new Vector2Int(board.Width / 2, board.Height - 1);
-                pieceSetPieces[i].transform.position = board.CellToWorld(pieceSetPieces[i].BoardPosition);
-
+                nextPieceSet.Pieces[i].GetComponent<SpriteRenderer>().sortingOrder = nextPieceSet.Pieces.Length - i;
+                nextPieceSet.Pieces[i].BoardPosition = new Vector2Int(board.Width / 2, board.Height - 1);
+                nextPieceSet.Pieces[i].transform.position = board.CellToWorld(nextPieceSet.Pieces[i].BoardPosition);
+                nextPieceSet.Pieces[i].transform.SetParent(board.transform);
             }
-            PieceSet pSet = new PieceSet(pieceSetPieces);
-            mover.AttachPieceSet(pSet);
+
+            mover.AttachPieceSet(nextPieceSet);
+            return nextPieceSet;
         }
 
         private void ProcessPieceClear(Piece[] pieces)
