@@ -16,7 +16,6 @@ namespace PZL.Core
         {
             grid = GetComponent<Grid>();
             cells = new Piece[Width, Height];
-
         }
 
         private void Start()

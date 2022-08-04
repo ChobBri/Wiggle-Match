@@ -39,6 +39,7 @@ namespace PZL.Core
                 if(entryDelayTime >= entryDelay)
                 {
                     CreateNewPieceSet();
+                    if (!board.IsEmpty(new Vector2Int(board.Width / 2, 0))) Die();
                     entryDelayTime = 0.0f;
                 } else
                 {
@@ -77,6 +78,7 @@ namespace PZL.Core
                 {
                     if (AdjacentColorSize(piece.BoardPosition, piece.Color) >= 4)
                     {
+                        Debug.Log(AdjacentColorSize(piece.BoardPosition, piece.Color));
                         hasCleared = true;
                         PieceClear(piece.BoardPosition, piece.Color);
                     }
@@ -140,6 +142,12 @@ namespace PZL.Core
             int buildIndex = SceneManager.GetActiveScene().buildIndex;
             buildIndex += 1;
             buildIndex %= SceneManager.sceneCount;
+            SceneManager.LoadScene(buildIndex);
+        }
+
+        private void Die()
+        {
+            int buildIndex = SceneManager.GetActiveScene().buildIndex;
             SceneManager.LoadScene(buildIndex);
         }
     }
