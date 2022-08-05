@@ -147,7 +147,7 @@ namespace PZL.Core
 
         public void DestroyPiece(Vector2Int boardPosition)
         {
-            Destroy(cells[boardPosition.x, boardPosition.y].gameObject);
+            cells[boardPosition.x, boardPosition.y].Die();
             cells[boardPosition.x, boardPosition.y] = null;
         }
 
