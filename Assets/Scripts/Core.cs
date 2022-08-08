@@ -2,17 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Core : MonoBehaviour
+namespace PZL.Core
 {
-    [SerializeField] GameObject persistentGameObjects;
-    static GameObject PGOinstance;
-
-    private void Awake()
+    public class Core : MonoBehaviour
     {
-        if (PGOinstance == null)
+        [SerializeField] GameObject persistentGameObjects;
+        AudioManager audioManager;
+        static GameObject PGOinstance;
+        bool paused = false;
+        [SerializeField] PuzzleSystem puzzleSystem;
+
+        private void Awake()
         {
-            PGOinstance = Instantiate(persistentGameObjects);
-            DontDestroyOnLoad(PGOinstance);
+            if (PGOinstance == null)
+            {
+                PGOinstance = Instantiate(persistentGameObjects);
+                DontDestroyOnLoad(PGOinstance);
+            }
+        }
+
+        private void Start()
+        {
+            audioManager = FindObjectOfType<AudioManager>();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                paused = !paused;
+                if (paused)
+                {
+                    puzzleSystem.gameObject.SetActive(false);
+                    audioManager.GetComponent<AudioSource>().Pause();
+                }
+                else
+                {
+                    puzzleSystem.gameObject.SetActive(true);
+                    audioManager.GetComponent<AudioSource>().Play();
+                }
+            }
+
+
         }
     }
 }
+

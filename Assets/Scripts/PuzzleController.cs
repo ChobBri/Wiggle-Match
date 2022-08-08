@@ -25,25 +25,26 @@ namespace PZL.Controls
         {
             if (mover.HasPieceSet)
             {
-                if(moveRateTime >= moveRate)
+                if (Input.GetKeyDown(KeyCode.RightArrow) && previousDirectionBuffer != Vector2Int.left)
+                {
+                    directionBuffer = Vector2Int.right;
+                }
+                else if (Input.GetKeyDown(KeyCode.LeftArrow) && previousDirectionBuffer != Vector2Int.right)
+                {
+                    directionBuffer = Vector2Int.left;
+                }
+                else if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    directionBuffer = Vector2Int.down;
+                }
+
+                if (moveRateTime >= moveRate)
                 {
                     mover.Move(directionBuffer);
                     previousDirectionBuffer = directionBuffer;
                     moveRateTime = 0.0f;
                 } else
                 {
-                    if (Input.GetKeyDown(KeyCode.RightArrow) && previousDirectionBuffer != Vector2Int.left)
-                    {
-                        directionBuffer = Vector2Int.right;
-                    }
-                    else if (Input.GetKeyDown(KeyCode.LeftArrow) && previousDirectionBuffer != Vector2Int.right)
-                    {
-                        directionBuffer = Vector2Int.left;
-                    } else if (Input.GetKeyDown(KeyCode.DownArrow))
-                    {
-                        directionBuffer = Vector2Int.down;
-                    }
-
                     moveRateTime += Time.deltaTime;
                 }
             } else

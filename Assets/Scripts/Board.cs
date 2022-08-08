@@ -10,7 +10,7 @@ namespace PZL.Core
         public int Height { get; } = 14;
 
         private Piece[,] cells;
-        public Grid grid;
+        Grid grid;
 
         private void Awake()
         {
@@ -25,6 +25,7 @@ namespace PZL.Core
             {
                 Piece piece = transform.GetChild(i).GetComponent<Piece>();
                 piece.BoardPosition = WorldToCell(piece.transform.position);
+                Debug.Assert(cells[piece.BoardPosition.x, piece.BoardPosition.y] == null, "Duplicate Blocks!");
                 AssignPiece(piece);
                 piece.transform.position = CellToWorld(piece.BoardPosition);
             }
