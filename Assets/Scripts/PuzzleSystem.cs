@@ -143,7 +143,7 @@ namespace PZL.Core
         {
             int buildIndex = SceneManager.GetActiveScene().buildIndex;
             buildIndex += 1;
-            buildIndex %= SceneManager.sceneCount;
+            buildIndex %= SceneManager.sceneCountInBuildSettings;
             SceneManager.LoadScene(buildIndex);
         }
 
