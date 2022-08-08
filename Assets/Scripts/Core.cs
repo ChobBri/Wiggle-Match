@@ -7,7 +7,7 @@ namespace PZL.Core
     public class Core : MonoBehaviour
     {
         [SerializeField] GameObject persistentGameObjects;
-        AudioManager audioManager;
+        MusicPlayer audioManager;
         static GameObject PGOinstance;
         bool paused = false;
         [SerializeField] PuzzleSystem puzzleSystem;
@@ -23,7 +23,7 @@ namespace PZL.Core
 
         private void Start()
         {
-            audioManager = FindObjectOfType<AudioManager>();
+            audioManager = FindObjectOfType<MusicPlayer>();
         }
 
         private void Update()

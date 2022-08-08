@@ -499,6 +499,7 @@ MonoBehaviour:
   mover: {fileID: 5126727036494536164}
   board: {fileID: 5126727036994147272}
   pieceQueue: {fileID: 5126727035878662513}
+  levelTimer: {fileID: 6683135257316694168}
 --- !u!1 &5126727036128974549
 GameObject:
   m_ObjectHideFlags: 0

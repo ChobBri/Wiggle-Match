@@ -15,15 +15,20 @@ namespace PZL.Core
         [SerializeField] PieceSetMover mover;
         [SerializeField] Board board;
         [SerializeField] PieceQueue pieceQueue;
+        [SerializeField] LevelTimer levelTimer;
+        MusicPlayer musicPlayer;
+
 
         bool isClearing = false;
+        bool isPlaying = true;
 
-
+        public event System.Action OnPuzzleComplete;
 
         private void Start()
         {
             mover.OnPieceCollision += ProcessPieceClear;
             pieceQueue.InitFill(gamePieces);
+            musicPlayer = FindObjectOfType<MusicPlayer>();
         }
 
         private void OnDestroy()
@@ -50,8 +55,9 @@ namespace PZL.Core
             }
         }
 
-        private PieceSet DeployPieceSet()
+        private void DeployPieceSet()
         {
+            if (!isPlaying) return ;
             PieceSet nextPieceSet = pieceQueue.RetrieveNextPieceSet(gamePieces);
             for (int i = 0; i < nextPieceSet.Pieces.Length; i++)
             {
@@ -62,7 +68,6 @@ namespace PZL.Core
             }
 
             mover.AttachPieceSet(nextPieceSet);
-            return nextPieceSet;
         }
 
         private void ProcessPieceClear(Piece[] pieces)
@@ -98,8 +103,17 @@ namespace PZL.Core
 
             if (!board.HasStaticPiece())
             {
-                MoveToNextLevel();
+                OnPuzzleComplete?.Invoke();
+                EndLevel();
             }
+        }
+
+        private void EndLevel()
+        {
+            isPlaying = false;
+            musicPlayer.PlayLevelClearJingle();
+            StartCoroutine(TransitionToNextLevel(5.0f));
+            levelTimer.IsTimerRunning = false;
         }
 
         private int AdjacentColorSize(Vector2Int boardPosition, PieceColor color, bool[,] memo = null)
@@ -139,8 +153,9 @@ namespace PZL.Core
             if (boardPosition.y < board.Height - 1) PieceClear(boardPosition + Vector2Int.up, color, memo);
         }
 
-        private void MoveToNextLevel()
+        private IEnumerator TransitionToNextLevel(float delayTime)
         {
+            yield return new WaitForSeconds(delayTime);
             int buildIndex = SceneManager.GetActiveScene().buildIndex;
             buildIndex += 1;
             buildIndex %= SceneManager.sceneCountInBuildSettings;
