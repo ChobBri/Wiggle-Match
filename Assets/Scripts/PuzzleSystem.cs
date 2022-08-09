@@ -68,7 +68,7 @@ namespace PZL.Core
                 nextPieceSet.Pieces[i].GetComponent<SpriteRenderer>().sortingOrder = nextPieceSet.Pieces.Length - i;
                 nextPieceSet.Pieces[i].BoardPosition = new Vector2Int(board.Width / 2, board.Height - 1);
                 nextPieceSet.Pieces[i].transform.position = board.CellToWorld(nextPieceSet.Pieces[i].BoardPosition);
-                nextPieceSet.Pieces[i].transform.SetParent(board.transform);
+                nextPieceSet.Pieces[i].transform.SetParent(board.transform.GetChild(0).transform);
             }
 
             mover.AttachPieceSet(nextPieceSet);

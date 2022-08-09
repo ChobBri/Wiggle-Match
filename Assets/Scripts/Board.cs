@@ -12,6 +12,7 @@ namespace PZL.Core
         private Piece[,] cells;
         Grid grid;
 
+        [SerializeField] Transform piecesTransform;
         private void Awake()
         {
             grid = GetComponent<Grid>();
@@ -20,10 +21,10 @@ namespace PZL.Core
 
         private void Start()
         {
-            int length = transform.childCount;
+            int length = piecesTransform.childCount;
             for (int i = 0; i < length; i++)
             {
-                Piece piece = transform.GetChild(i).GetComponent<Piece>();
+                Piece piece = piecesTransform.GetChild(i).GetComponent<Piece>();
                 piece.BoardPosition = WorldToCell(piece.transform.position);
                 Debug.Assert(cells[piece.BoardPosition.x, piece.BoardPosition.y] == null, "Duplicate Blocks!");
                 AssignPiece(piece);

@@ -27,6 +27,16 @@ public class MusicPlayer : MonoBehaviour
         audioSource.loop = false;
     }
 
+    public void Play()
+    {
+        audioSource.Play();
+    }
+
+    public void Pause()
+    {
+        audioSource.Pause();
+    }
+
     void PlayLevelMusic(Scene prevScene, Scene currScene)
     {
         audioSource.clip = backgroundMusic;

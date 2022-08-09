@@ -41,6 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3229431887
+    locked: 0
+  - name: Board
+    uniqueID: 698334351
+    locked: 0
   - name: Pieces
     uniqueID: 1157478183
+    locked: 0
+  - name: Pause
+    uniqueID: 2812387949
     locked: 0
