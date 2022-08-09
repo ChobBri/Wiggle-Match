@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class LevelNumber : MonoBehaviour
 {
     [SerializeField] TMP_Text levelNumberText;
-    const int LVL_OFFSET = 1;
+    const int LVL_OFFSET = 0; // 1 - Extra Scenes (ex. main menu)
 
     void Start()
     {

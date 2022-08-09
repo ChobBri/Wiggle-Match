@@ -93,7 +93,7 @@ namespace PZL.Core
 
         private IEnumerator SimulateGravityDrop(Piece[] changedPieces)
         {
-            Vector2 GRAVITY = new Vector2(0.0f, -0.1f);
+            Vector2 GRAVITY = new Vector2(0.0f, -25.0f);
             bool isDropping = true;
             while (isDropping)
             {
@@ -101,7 +101,7 @@ namespace PZL.Core
                 foreach(var piece in changedPieces)
                 {
                     piece.velocity += GRAVITY * Time.deltaTime;
-                    piece.transform.position += (Vector3) piece.velocity;
+                    piece.transform.position += (Vector3) piece.velocity * Time.deltaTime;
                     if(piece.transform.position.y <= CellToWorld(piece.BoardPosition).y)
                     {
                         piece.transform.position = CellToWorld(piece.BoardPosition);

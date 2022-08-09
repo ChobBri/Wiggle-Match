@@ -49,6 +49,7 @@ namespace PZL.Controls
                 }
             } else
             {
+                previousDirectionBuffer = Vector2Int.down;
                 if (Input.GetKey(KeyCode.RightArrow))
                 {
                     directionBuffer = Vector2Int.right;

@@ -7,7 +7,7 @@ public class LevelTimer : MonoBehaviour
 {
     [SerializeField] TMP_Text levelTimerText;
 
-    public bool IsTimerRunning { get; set; } = true;
+    public bool IsTimerRunning { get; set; } = false;
 
     float totalTime = 0.0f;
 

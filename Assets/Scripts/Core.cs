@@ -33,12 +33,12 @@ namespace PZL.Core
                 paused = !paused;
                 if (paused)
                 {
-                    puzzleSystem.gameObject.SetActive(false);
+                    Time.timeScale = 0;
                     audioManager.GetComponent<AudioSource>().Pause();
                 }
                 else
                 {
-                    puzzleSystem.gameObject.SetActive(true);
+                    Time.timeScale = 1;
                     audioManager.GetComponent<AudioSource>().Play();
                 }
             }

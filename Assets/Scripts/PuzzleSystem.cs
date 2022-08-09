@@ -16,19 +16,22 @@ namespace PZL.Core
         [SerializeField] Board board;
         [SerializeField] PieceQueue pieceQueue;
         [SerializeField] LevelTimer levelTimer;
-        MusicPlayer musicPlayer;
+        [SerializeField] MusicPlayer musicPlayer;
 
 
         bool isClearing = false;
-        bool isPlaying = true;
+        bool isPlaying = false;
 
         public event System.Action OnPuzzleComplete;
 
-        private void Start()
+        private IEnumerator Start()
         {
             mover.OnPieceCollision += ProcessPieceClear;
+
+            yield return new WaitForSeconds(1.0f);
+            isPlaying = true;
+            levelTimer.IsTimerRunning = true;
             pieceQueue.InitFill(gamePieces);
-            musicPlayer = FindObjectOfType<MusicPlayer>();
         }
 
         private void OnDestroy()
@@ -38,6 +41,8 @@ namespace PZL.Core
 
         private void Update()
         {
+            if (!isPlaying) return;
+
             if (mover.HasPieceSet)
             {
 
@@ -57,7 +62,6 @@ namespace PZL.Core
 
         private void DeployPieceSet()
         {
-            if (!isPlaying) return ;
             PieceSet nextPieceSet = pieceQueue.RetrieveNextPieceSet(gamePieces);
             for (int i = 0; i < nextPieceSet.Pieces.Length; i++)
             {
