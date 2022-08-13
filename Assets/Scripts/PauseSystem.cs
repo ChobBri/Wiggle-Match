@@ -6,7 +6,6 @@ using PZL.Controls;
 
 public class PauseSystem : MonoBehaviour
 {
-    bool paused = false;
     [SerializeField] MusicPlayer musicPlayer;
     [SerializeField] PuzzleController puzzleController;
     [SerializeField] Board board;
@@ -19,45 +18,33 @@ public class PauseSystem : MonoBehaviour
     {
         pauseCanvas.enabled = false;
     }
-    // Start is called before the first frame update
-    void Start()
+
+
+    public void Pause()
     {
-        
+        Time.timeScale = 0;
+
+        musicPlayer.Pause();
+        puzzleController.enabled = false;
+
+        pauseCanvas.enabled = true;
+        board.GetComponent<SpriteRenderer>().sortingLayerName = "Pause";
+        pieceQueue.GetComponent<SpriteRenderer>().sortingLayerName = "Pause";
+        levelInfoBorderSprite.sortingLayerName = "Pause";
+        backgroundSprite.sortingLayerName = "Pause";
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Unpause()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            paused = !paused;
-            if (paused)
-            {
-                Time.timeScale = 0;
+        Time.timeScale = 1;
 
-                musicPlayer.Pause();
-                puzzleController.enabled = false;
+        musicPlayer.Play();
+        puzzleController.enabled = true;
 
-                pauseCanvas.enabled = true;
-                board.GetComponent<SpriteRenderer>().sortingLayerName = "Pause";
-                pieceQueue.GetComponent<SpriteRenderer>().sortingLayerName = "Pause";
-                levelInfoBorderSprite.sortingLayerName = "Pause";
-                backgroundSprite.sortingLayerName = "Pause";
-            }
-            else
-            {
-                Time.timeScale = 1;
-
-                musicPlayer.Play();
-                puzzleController.enabled = true;
-
-                pauseCanvas.enabled = false;
-                board.GetComponent<SpriteRenderer>().sortingLayerName = "Board";
-                pieceQueue.GetComponent<SpriteRenderer>().sortingLayerName = "Board";
-                levelInfoBorderSprite.sortingLayerName = "Board";
-                backgroundSprite.sortingLayerName = "Background";
-
-            }
-        }
+        pauseCanvas.enabled = false;
+        board.GetComponent<SpriteRenderer>().sortingLayerName = "Board";
+        pieceQueue.GetComponent<SpriteRenderer>().sortingLayerName = "Board";
+        levelInfoBorderSprite.sortingLayerName = "Board";
+        backgroundSprite.sortingLayerName = "Background";
     }
 }

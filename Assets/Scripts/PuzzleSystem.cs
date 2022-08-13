@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using PZL.Movement;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace PZL.Core
 {
     public class PuzzleSystem : MonoBehaviour
     {
+        enum PuzzleState { Play, Complete, Pause, GameOver };
         [SerializeField] float entryDelay = 1.0f;
         float entryDelayTime = 0.0f;
 
@@ -15,12 +17,16 @@ namespace PZL.Core
         [SerializeField] PieceSetMover mover;
         [SerializeField] Board board;
         [SerializeField] PieceQueue pieceQueue;
+        [SerializeField] LevelNumber levelNumber;
         [SerializeField] LevelTimer levelTimer;
         [SerializeField] MusicPlayer musicPlayer;
+        [SerializeField] GameOverSystem gameOverSystem;
+        [SerializeField] PauseSystem pauseSystem;
+        [SerializeField] GameObject gameOverPiece;
 
+        PuzzleState state = PuzzleState.Play;
 
         bool isClearing = false;
-        bool isPlaying = false;
 
         public event System.Action OnPuzzleComplete;
 
@@ -29,7 +35,6 @@ namespace PZL.Core
             mover.OnPieceCollision += ProcessPieceClear;
 
             yield return new WaitForSeconds(1.0f);
-            isPlaying = true;
             levelTimer.IsTimerRunning = true;
             pieceQueue.InitFill(gamePieces);
         }
@@ -41,26 +46,93 @@ namespace PZL.Core
 
         private void Update()
         {
-            if (!isPlaying) return;
+            switch (state)
+            {
+                case PuzzleState.Play:
+                    ProcessPlay();
+                    break;
+                case PuzzleState.Complete:
+                    break;
+                case PuzzleState.Pause:
+                    ProcessPause();
+                    break;
+                case PuzzleState.GameOver:
+                    ProcessGameOver();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+      
+
+        private void ProcessPlay()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape)) 
+            {
+                pauseSystem.Pause();
+                state = PuzzleState.Pause;
+                return;
+            }
 
             if (mover.HasPieceSet)
             {
 
-            } else
+            }
+            else
             {
-                if(entryDelayTime >= entryDelay)
+                if (entryDelayTime >= entryDelay)
                 {
-                    DeployPieceSet();
-                    if (!board.IsEmpty(new Vector2Int(board.Width / 2, board.Height - 1))) Die();
+                    if (!pieceQueue.HasNext()) return;
+
+                    if (!board.IsEmpty(new Vector2Int(board.Width / 2, board.Height - 1))) 
+                    { 
+                        var pieceset = ConstructNextPieceSet();
+                        for (int i = 1; i < pieceset.Pieces.Length; i++)
+                        {
+                            Destroy(pieceset.Pieces[i].gameObject);
+                        }
+
+                        pieceset.Pieces[0].GetComponent<SpriteRenderer>().sortingOrder = pieceset.Pieces.Length + 1;
+                        Piece deadPiece = board.UnassignPiece(new Vector2Int(board.Width / 2, board.Height - 1));
+                        Destroy(deadPiece.gameObject);
+                        board.AssignPiece(pieceset.Pieces[0]);
+                        Die();
+                        return;
+                    }
+
+                    DeployPieceSet(ConstructNextPieceSet());
                     entryDelayTime = 0.0f;
-                } else
+                }
+                else
                 {
-                    if(!isClearing) entryDelayTime += Time.deltaTime;
+                    if (!isClearing) entryDelayTime += Time.deltaTime;
                 }
             }
         }
 
-        private void DeployPieceSet()
+        private void ProcessPause()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                pauseSystem.Unpause();
+                state = PuzzleState.Play;
+                return;
+            }
+        }
+
+        private void ProcessGameOver()
+        {
+
+        }
+
+        private void DeployPieceSet(PieceSet pieceSet)
+        {
+            mover.AttachPieceSet(pieceSet);
+        }
+
+        private PieceSet ConstructNextPieceSet()
         {
             PieceSet nextPieceSet = pieceQueue.RetrieveNextPieceSet(gamePieces);
             for (int i = 0; i < nextPieceSet.Pieces.Length; i++)
@@ -70,8 +142,7 @@ namespace PZL.Core
                 nextPieceSet.Pieces[i].transform.position = board.CellToWorld(nextPieceSet.Pieces[i].BoardPosition);
                 nextPieceSet.Pieces[i].transform.SetParent(board.transform.GetChild(0).transform);
             }
-
-            mover.AttachPieceSet(nextPieceSet);
+            return nextPieceSet;
         }
 
         private void ProcessPieceClear(Piece[] pieces)
@@ -89,7 +160,6 @@ namespace PZL.Core
                 {
                     if (AdjacentColorSize(piece.BoardPosition, piece.Color) >= 4)
                     {
-                        Debug.Log(AdjacentColorSize(piece.BoardPosition, piece.Color));
                         hasCleared = true;
                         PieceClear(piece.BoardPosition, piece.Color);
                     }
@@ -105,7 +175,7 @@ namespace PZL.Core
             }
             isClearing = false;
 
-            if (!board.HasStaticPiece())
+            if (!board.HasTargetPiece())
             {
                 OnPuzzleComplete?.Invoke();
                 EndLevel();
@@ -114,8 +184,9 @@ namespace PZL.Core
 
         private void EndLevel()
         {
-            isPlaying = false;
+            state = PuzzleState.Complete;
             musicPlayer.PlayLevelClearJingle();
+            ScoreRecord.totalSeconds += levelTimer.Seconds;
             StartCoroutine(TransitionToNextLevel(5.0f));
             levelTimer.IsTimerRunning = false;
         }
@@ -168,8 +239,50 @@ namespace PZL.Core
 
         private void Die()
         {
-            int buildIndex = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(buildIndex);
+            state = PuzzleState.GameOver;
+            levelTimer.IsTimerRunning = false;
+            musicPlayer.Pause();
+            ScoreRecord.totalSeconds += levelTimer.Seconds;
+            StartCoroutine(PlayGameOverAnimation());
+            //int buildIndex = SceneManager.GetActiveScene().buildIndex;
+            //SceneManager.LoadScene(buildIndex);
+        }
+
+        private IEnumerator PlayGameOverAnimation()
+        {
+            yield return new WaitForSeconds(1.0f);
+            yield return PlayBoardShutDownAnimation();
+            yield return new WaitForSeconds(1.0f);
+            ScoreData data = new ScoreData(new char[] { 'A', 'B', 'C'} , ScoreRecord.totalSeconds, levelNumber.Number);
+            bool isHighScore = ScoreRecord.IsNewHighScore(data);
+            if (isHighScore)
+            {
+                yield return gameOverSystem.ProcessNameEntry(ScoreRecord.totalSeconds, levelNumber.Number);
+            }
+            gameOverSystem.EnableGameOverScreen();
+            yield return new WaitForSeconds(3.0f);
+
+            SceneManager.LoadScene("Score Screen");
+        }
+
+        private IEnumerator PlayBoardShutDownAnimation()
+        {
+            for(int row = board.Height - 1; row >= 0; row--)
+            {
+                bool hasTileInRow = false;
+                for (int col = 0; col < board.Width; col++)
+                {
+                    Vector2Int boardPos = new Vector2Int(col, row);
+                    if (board.IsEmpty(boardPos)) continue;
+                    Destroy(board.UnassignPiece(boardPos).gameObject);
+                    Piece piece = Instantiate(gameOverPiece, board.CellToWorld(boardPos), Quaternion.identity).GetComponent<Piece>();
+                    piece.BoardPosition = boardPos;
+                    board.AssignPiece(piece); 
+                    hasTileInRow = true;
+                }
+                if (hasTileInRow) yield return new WaitForSeconds(0.1f);
+            }
+            yield return null;
         }
     }
 }

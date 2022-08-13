@@ -9,6 +9,7 @@ public class LevelTimer : MonoBehaviour
 
     public bool IsTimerRunning { get; set; } = false;
 
+    public int Seconds { get => (int)totalTime; }
     float totalTime = 0.0f;
 
     // Update is called once per frame

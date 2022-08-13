@@ -24,6 +24,11 @@ namespace PZL.Core
             }
         }
 
+        public bool HasNext()
+        {
+            return pieceQueue[0] != null;
+        }
+
         public PieceSet RetrieveNextPieceSet(GameObject[] gamePieces)
         {
             PieceSet nextPieceSet = pieceQueue[0];

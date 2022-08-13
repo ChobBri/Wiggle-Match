@@ -94,7 +94,7 @@ namespace PZL.Core
 
         private IEnumerator SimulateGravityDrop(Piece[] changedPieces)
         {
-            Vector2 GRAVITY = new Vector2(0.0f, -25.0f);
+            Vector2 GRAVITY = new Vector2(0.0f, -40.0f);
             bool isDropping = true;
             while (isDropping)
             {
@@ -121,7 +121,7 @@ namespace PZL.Core
             yield return null;
         }
 
-        public bool HasStaticPiece()
+        public bool HasTargetPiece()
         {
             for(int row = 0; row < Height; row++)
             {
@@ -129,7 +129,7 @@ namespace PZL.Core
                 {
                     Piece piece = cells[col, row];
                     if (piece == null) continue;
-                    if (piece.IsStatic) return true;
+                    if (piece.IsStatic && piece.Color != PieceColor.Other) return true;
                 }
             }
             return false;
@@ -157,7 +157,11 @@ namespace PZL.Core
         {
             foreach(var piece in pieces)
             {
-                AssignPiece(piece);
+                if(IsEmpty(piece.BoardPosition)) AssignPiece(piece);
+                else
+                {
+                    Destroy(piece.gameObject);
+                }
             }
         }
 

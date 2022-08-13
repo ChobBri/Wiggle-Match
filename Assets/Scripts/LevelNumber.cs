@@ -9,9 +9,12 @@ public class LevelNumber : MonoBehaviour
     [SerializeField] TMP_Text levelNumberText;
     const int LVL_OFFSET = 0; // 1 - Extra Scenes (ex. main menu)
 
+    public int Number { get; protected set; }
+
     void Start()
     {
-        levelNumberText.text = $"Level {SceneManager.GetActiveScene().buildIndex + LVL_OFFSET}";
+        Number = SceneManager.GetActiveScene().buildIndex + LVL_OFFSET;
+        levelNumberText.text = $"Level {Number}";
     }
 
 }
