@@ -773,10 +773,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 3.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4130483479249432871, guid: daeb44c1e28617449b42e5bcf9f0d31a, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: df069de7c8e90914bb8e2af3eaf37142, type: 3}
     - target: {fileID: 4935622612365798053, guid: daeb44c1e28617449b42e5bcf9f0d31a, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 467eb292a816cc24599c2b69b5ff6d16, type: 3}
+    - target: {fileID: 5099228096779205687, guid: daeb44c1e28617449b42e5bcf9f0d31a, type: 3}
+      propertyPath: backgroundMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: df069de7c8e90914bb8e2af3eaf37142, type: 3}
     - target: {fileID: 5126727036849384833, guid: daeb44c1e28617449b42e5bcf9f0d31a, type: 3}
       propertyPath: m_RootOrder
       value: 0

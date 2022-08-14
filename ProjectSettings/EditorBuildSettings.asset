@@ -27,6 +27,30 @@ EditorBuildSettings:
     path: Assets/Scenes/Level 6.unity
     guid: 5445bdb46d60a824880c8f2d68f2cedb
   - enabled: 1
+    path: Assets/Scenes/Level 7.unity
+    guid: 7ef3105cfd1074e40a70fe3a99a624c1
+  - enabled: 1
+    path: Assets/Scenes/Level 8.unity
+    guid: 553b9bcfeefdf1249afdf4e6a8776158
+  - enabled: 1
+    path: Assets/Scenes/Level 9.unity
+    guid: 1a41c7efda89fd4439cf34565845dbaf
+  - enabled: 1
+    path: Assets/Scenes/Level 10.unity
+    guid: a02cddf758c37614caf3598891ad4386
+  - enabled: 1
+    path: Assets/Scenes/Level 11.unity
+    guid: 66533f5e4eb36a54a96bf9dd860fc1c7
+  - enabled: 1
+    path: Assets/Scenes/Level 12.unity
+    guid: 6fc9d9560cd0533408118422fba462fd
+  - enabled: 1
+    path: Assets/Scenes/Level 13.unity
+    guid: d5e2f1186aebb56428c6ef67e5bc0150
+  - enabled: 1
+    path: Assets/Scenes/Level 14.unity
+    guid: 57a1db1c274930e42a6d37078d3393e0
+  - enabled: 1
     path: Assets/Scenes/Score Screen.unity
     guid: e5804a252276f9e4486f2d7b934bd1fa
   m_configObjects: {}
