@@ -30,6 +30,7 @@ public class MenuController : MonoBehaviour
     {
         menuScreen.SetActive(true);
         optionsScreen.SetActive(false);
+        PlayerPrefs.Save();
     }
 
     public void EnterScoresMenu()

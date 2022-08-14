@@ -251,7 +251,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 235425197}
+        m_TargetAssemblyTypeName: SoundOptionsSystem, Assembly-CSharp
+        m_MethodName: SetSoundVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &75832230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,6 +1036,7 @@ GameObject:
   - component: {fileID: 235425193}
   - component: {fileID: 235425192}
   - component: {fileID: 235425196}
+  - component: {fileID: 235425197}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1128,6 +1141,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuScreen: {fileID: 1772731945}
   optionsScreen: {fileID: 1647101765}
+--- !u!114 &235425197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235425191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c06963403d7f7d24fb7724a18f8d34da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: f2d7cd07e863d3b4eb57dbee0d0d3c14, type: 2}
+  masterVolumeSlider: {fileID: 667173667}
+  musicVolumeSlider: {fileID: 1143118668}
+  soundVolumeSlider: {fileID: 74314471}
 --- !u!1 &349618403
 GameObject:
   m_ObjectHideFlags: 0
@@ -1678,7 +1707,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 235425197}
+        m_TargetAssemblyTypeName: SoundOptionsSystem, Assembly-CSharp
+        m_MethodName: SetMasterVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &670847197
 GameObject:
   m_ObjectHideFlags: 0
@@ -2539,7 +2580,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 235425197}
+        m_TargetAssemblyTypeName: SoundOptionsSystem, Assembly-CSharp
+        m_MethodName: SetMusicVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1181295104
 GameObject:
   m_ObjectHideFlags: 0
