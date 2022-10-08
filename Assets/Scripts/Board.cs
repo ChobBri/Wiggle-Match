@@ -6,7 +6,6 @@ namespace PZL.Core
 {
     public class Board : MonoBehaviour
     {
-        [SerializeField] SfxPlayer sfxPlayer;
         public int Width { get; } = 7;
         public int Height { get; } = 14;
 
@@ -124,24 +123,16 @@ namespace PZL.Core
         {
             Vector2 GRAVITY = new Vector2(0.0f, -40.0f);
             bool isDropping = true;
-            bool[] hasLanded = new bool[changedPieces.Length];
-
             while (isDropping)
             {
                 isDropping = false;
-                for(int i = 0; i < changedPieces.Length; i++)
+                foreach(var piece in changedPieces)
                 {
-                    var piece = changedPieces[i];
                     piece.velocity += GRAVITY * Time.deltaTime;
                     piece.transform.position += (Vector3) piece.velocity * Time.deltaTime;
                     if(piece.transform.position.y <= CellToWorld(piece.BoardPosition).y)
                     {
                         piece.transform.position = CellToWorld(piece.BoardPosition);
-                        if (!hasLanded[i])
-                        {
-                            sfxPlayer.PlayBlockCrashSfx();
-                            hasLanded[i] = true;
-                        }
                     } else
                     {
                         isDropping = true;

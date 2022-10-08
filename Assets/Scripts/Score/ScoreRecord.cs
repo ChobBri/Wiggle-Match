@@ -8,16 +8,16 @@ using System.IO;
 public static class ScoreRecord
 {
     public static ScoreData[] highScores = new ScoreData[]{
-        new ScoreData() { initials = new char[] {'A', 'A', 'A' }, totalSeconds = 300, highestLevel = 6},
-        new ScoreData() { initials = new char[] {'B', 'B', 'B' }, totalSeconds = 300, highestLevel = 6},
-        new ScoreData() { initials = new char[] {'C', 'C', 'C' }, totalSeconds = 300, highestLevel = 5},
-        new ScoreData() { initials = new char[] {'D', 'D', 'D' }, totalSeconds = 300, highestLevel = 5},
-        new ScoreData() { initials = new char[] {'E', 'E', 'E' }, totalSeconds = 300, highestLevel = 4},
-        new ScoreData() { initials = new char[] {'F', 'F', 'F' }, totalSeconds = 300, highestLevel = 4},
-        new ScoreData() { initials = new char[] {'G', 'G', 'G' }, totalSeconds = 300, highestLevel = 3},
-        new ScoreData() { initials = new char[] {'H', 'H', 'H' }, totalSeconds = 300, highestLevel = 3},
-        new ScoreData() { initials = new char[] {'I', 'I', 'I' }, totalSeconds = 300, highestLevel = 2},
-        new ScoreData() { initials = new char[] {'J', 'J', 'J' }, totalSeconds = 300, highestLevel = 2},
+        new ScoreData() { initials = new char[] {'T', 'O', 'B' }, totalSeconds = 300, highestLevel = 6},
+        new ScoreData() { initials = new char[] {'C', 'A', 'T' }, totalSeconds = 300, highestLevel = 6},
+        new ScoreData() { initials = new char[] {'G', 'U', 'B' }, totalSeconds = 300, highestLevel = 5},
+        new ScoreData() { initials = new char[] {'Z', 'I', 'M' }, totalSeconds = 300, highestLevel = 5},
+        new ScoreData() { initials = new char[] {'P', 'A', 'O' }, totalSeconds = 300, highestLevel = 4},
+        new ScoreData() { initials = new char[] {'E', 'D', 'D' }, totalSeconds = 300, highestLevel = 4},
+        new ScoreData() { initials = new char[] {'M', 'Y', 'L' }, totalSeconds = 300, highestLevel = 3},
+        new ScoreData() { initials = new char[] {'W', 'E', 'S' }, totalSeconds = 300, highestLevel = 3},
+        new ScoreData() { initials = new char[] {'K', 'I', 'X' }, totalSeconds = 300, highestLevel = 2},
+        new ScoreData() { initials = new char[] {'Z', 'U', 'D' }, totalSeconds = 300, highestLevel = 2},
     };
 
     public static int totalSeconds = 0;
@@ -25,16 +25,16 @@ public static class ScoreRecord
     public static void ResetHighScores()
     {
         highScores = new ScoreData[]{
-            new ScoreData() { initials = new char[] {'A', 'A', 'A' }, totalSeconds = 300, highestLevel = 6},
-            new ScoreData() { initials = new char[] {'B', 'B', 'B' }, totalSeconds = 300, highestLevel = 6},
-            new ScoreData() { initials = new char[] {'C', 'C', 'C' }, totalSeconds = 300, highestLevel = 5},
-            new ScoreData() { initials = new char[] {'D', 'D', 'D' }, totalSeconds = 300, highestLevel = 5},
-            new ScoreData() { initials = new char[] {'E', 'E', 'E' }, totalSeconds = 300, highestLevel = 4},
-            new ScoreData() { initials = new char[] {'F', 'F', 'F' }, totalSeconds = 300, highestLevel = 4},
-            new ScoreData() { initials = new char[] {'G', 'G', 'G' }, totalSeconds = 300, highestLevel = 3},
-            new ScoreData() { initials = new char[] {'H', 'H', 'H' }, totalSeconds = 300, highestLevel = 3},
-            new ScoreData() { initials = new char[] {'I', 'I', 'I' }, totalSeconds = 300, highestLevel = 2},
-            new ScoreData() { initials = new char[] {'J', 'J', 'J' }, totalSeconds = 300, highestLevel = 2},
+            new ScoreData() { initials = new char[] {'T', 'O', 'B' }, totalSeconds = 300, highestLevel = 6},
+            new ScoreData() { initials = new char[] {'C', 'A', 'T' }, totalSeconds = 300, highestLevel = 6},
+            new ScoreData() { initials = new char[] {'G', 'U', 'B' }, totalSeconds = 300, highestLevel = 5},
+            new ScoreData() { initials = new char[] {'Z', 'I', 'M' }, totalSeconds = 300, highestLevel = 5},
+            new ScoreData() { initials = new char[] {'P', 'A', 'O' }, totalSeconds = 300, highestLevel = 4},
+            new ScoreData() { initials = new char[] {'E', 'D', 'D' }, totalSeconds = 300, highestLevel = 4},
+            new ScoreData() { initials = new char[] {'M', 'Y', 'L' }, totalSeconds = 300, highestLevel = 3},
+            new ScoreData() { initials = new char[] {'W', 'E', 'S' }, totalSeconds = 300, highestLevel = 3},
+            new ScoreData() { initials = new char[] {'K', 'I', 'X' }, totalSeconds = 300, highestLevel = 2},
+            new ScoreData() { initials = new char[] {'Z', 'U', 'D' }, totalSeconds = 300, highestLevel = 2},
         };
 
         string path = Path.Combine(Application.persistentDataPath, "score.sav");
