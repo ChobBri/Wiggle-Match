@@ -922,7 +922,7 @@ PrefabInstance:
     - target: {fileID: 5099228096779205687, guid: daeb44c1e28617449b42e5bcf9f0d31a, type: 3}
       propertyPath: backgroundMusic
       value: 
-      objectReference: {fileID: 8300000, guid: 33777f6ef86b9154abbdf0dab7ebb4a6, type: 3}
+      objectReference: {fileID: 8300000, guid: a53225f61d215904caaabc98f14b2f72, type: 3}
     - target: {fileID: 5126727036849384833, guid: daeb44c1e28617449b42e5bcf9f0d31a, type: 3}
       propertyPath: m_RootOrder
       value: 0

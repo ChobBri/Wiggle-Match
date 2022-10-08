@@ -14,7 +14,7 @@ public class LevelNumber : MonoBehaviour
     void Start()
     {
         Number = SceneManager.GetActiveScene().buildIndex + LVL_OFFSET;
-        levelNumberText.text = $"Level {Number}";
+        levelNumberText.text = $"Stage {Number}";
     }
 
 }
