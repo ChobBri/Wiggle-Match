@@ -23,7 +23,6 @@ namespace PZL.Core
         [SerializeField] GameOverSystem gameOverSystem;
         [SerializeField] PauseSystem pauseSystem;
         [SerializeField] GameObject gameOverPiece;
-        [SerializeField] SfxPlayer sfxPlayer;
 
         PuzzleState state = PuzzleState.Play;
 
@@ -163,7 +162,6 @@ namespace PZL.Core
                     {
                         hasCleared = true;
                         PieceClear(piece.BoardPosition, piece.Color);
-                        sfxPlayer.PlayBlockClearSfx();
                     }
                 }
                 if(hasCleared) yield return new WaitForSeconds(0.3f);
@@ -233,17 +231,10 @@ namespace PZL.Core
         private IEnumerator TransitionToNextLevel(float delayTime)
         {
             yield return new WaitForSeconds(delayTime);
-            if (SceneManager.GetActiveScene().name == "Level 15")
-            {
-                StartCoroutine(PlayGameOverAnimation());
-            }
-            else
-            {
-                int buildIndex = SceneManager.GetActiveScene().buildIndex;
-                buildIndex += 1;
-                buildIndex %= SceneManager.sceneCountInBuildSettings;
-                SceneManager.LoadScene(buildIndex);
-            }
+            int buildIndex = SceneManager.GetActiveScene().buildIndex;
+            buildIndex += 1;
+            buildIndex %= SceneManager.sceneCountInBuildSettings;
+            SceneManager.LoadScene(buildIndex);
         }
 
         private void Die()
@@ -251,6 +242,7 @@ namespace PZL.Core
             state = PuzzleState.GameOver;
             levelTimer.IsTimerRunning = false;
             musicPlayer.Pause();
+            ScoreRecord.totalSeconds += levelTimer.Seconds;
             StartCoroutine(PlayGameOverAnimation());
             //int buildIndex = SceneManager.GetActiveScene().buildIndex;
             //SceneManager.LoadScene(buildIndex);
@@ -265,12 +257,10 @@ namespace PZL.Core
             bool isHighScore = ScoreRecord.IsNewHighScore(data);
             if (isHighScore)
             {
-                musicPlayer.PlayNewHighScoreMusic();
-                yield return gameOverSystem.ProcessNameEntry(ScoreRecord.totalSeconds, levelNumber.Number + (state == PuzzleState.Complete ? 1 : 0));
+                yield return gameOverSystem.ProcessNameEntry(ScoreRecord.totalSeconds, levelNumber.Number);
             }
             gameOverSystem.EnableGameOverScreen();
-            musicPlayer.PlayGameOverJingle();
-            yield return new WaitForSeconds(5.5f);
+            yield return new WaitForSeconds(3.0f);
 
             SceneManager.LoadScene("Score Screen");
         }
@@ -290,11 +280,7 @@ namespace PZL.Core
                     board.AssignPiece(piece); 
                     hasTileInRow = true;
                 }
-                if (hasTileInRow)
-                {
-                    sfxPlayer.PlayBlockSolidfySfx();
-                    yield return new WaitForSeconds(0.1f);
-                }
+                if (hasTileInRow) yield return new WaitForSeconds(0.1f);
             }
             yield return null;
         }
