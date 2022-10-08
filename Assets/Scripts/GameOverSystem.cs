@@ -11,8 +11,6 @@ public class GameOverSystem : MonoBehaviour
     [SerializeField] GameObject letterSlots;
     [SerializeField] GameObject nameEntrySystem;
     [SerializeField] TMP_Text rankText;
-    [SerializeField] TMP_Text timeText;
-    [SerializeField] TMP_Text levelText;
 
 
 
@@ -40,12 +38,7 @@ public class GameOverSystem : MonoBehaviour
         letterSlots.transform.GetChild(3).GetComponent<TMP_Text>().enabled = false;
 
         int rank = ScoreRecord.GetRankNumber(new ScoreData(new char[] {'A', 'A', 'A' }, totalSeconds, highestLevel));
-        rankText.text = $"Rank {rank}.";
-
-        int min = totalSeconds / 60;
-        int seconds = totalSeconds % 60;
-        timeText.text = $"Total Time:\n{min}:{seconds:D2}";
-        levelText.text = $"Highest Stage:\n{highestLevel}";
+        rankText.text = $"{rank}.";
         while(nameIndex < 4)
         {
             var text = letterSlots.transform.GetChild(nameIndex).GetComponent<TMP_Text>();

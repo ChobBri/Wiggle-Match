@@ -49,6 +49,7 @@ public class MenuController : MonoBehaviour
         ScoreRecord.ResetHighScores();
     }
 
+
     public void PreviousSkin()
     {
         customPacks.DecrementSkinIndex();
