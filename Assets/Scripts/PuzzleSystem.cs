@@ -13,6 +13,7 @@ namespace PZL.Core
         [SerializeField] float entryDelay = 1.0f;
         float entryDelayTime = 0.0f;
 
+        [SerializeField] CustomPacks customPacks;
         [SerializeField] GameObject[] gamePieces;
         [SerializeField] PieceSetMover mover;
         [SerializeField] Board board;
@@ -31,13 +32,60 @@ namespace PZL.Core
 
         public event System.Action OnPuzzleComplete;
 
+        private void Awake()
+        {
+            for (int i = 0; i < gamePieces.Length; i++)
+            {
+                // Don't want to modify prefab
+                gamePieces[i] = Instantiate(gamePieces[i], new Vector3(100, 100, -100), Quaternion.identity);
+            }
+        }
+
         private IEnumerator Start()
         {
             mover.OnPieceCollision += ProcessPieceClear;
 
+            Skin skin = customPacks.CurrentSkin;
+
+            ApplySkin(skin);
+
             yield return new WaitForSeconds(1.0f);
+
             levelTimer.IsTimerRunning = true;
-            pieceQueue.InitFill(gamePieces);
+
+            
+
+            pieceQueue.InitFill(gamePieces, skin);
+        }
+
+        private void ApplySkin(Skin skin)
+        {
+
+            gamePieces[0].GetComponent<SpriteRenderer>().sprite = skin.redBlockSkin;
+            gamePieces[1].GetComponent<SpriteRenderer>().sprite = skin.greenBlockSkin;
+            gamePieces[2].GetComponent<SpriteRenderer>().sprite = skin.yellowBlockSkin;
+            gamePieces[3].GetComponent<SpriteRenderer>().sprite = skin.blueBlockSkin;
+
+            board.ApplySkin(skin);
+        }
+
+        private void ApplySkin(Skin skin, Piece piece)
+        {
+            switch (piece.Color)
+            {
+                case PieceColor.Red:
+                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.redStaticBlockSkin : skin.redBlockSkin;
+                    break;
+                case PieceColor.Green:
+                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.greenStaticBlockSkin : skin.greenBlockSkin;
+                    break;
+                case PieceColor.Yellow:
+                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.yellowStaticBlockSkin : skin.yellowBlockSkin;
+                    break;
+                case PieceColor.Blue:
+                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.blueStaticBlockSkin : skin.blueBlockSkin;
+                    break;
+            }
         }
 
         private void OnDestroy()
@@ -70,7 +118,7 @@ namespace PZL.Core
 
         private void ProcessPlay()
         {
-            if (Input.GetKeyDown(KeyCode.Escape)) 
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) 
             {
                 pauseSystem.Pause();
                 state = PuzzleState.Pause;
@@ -115,7 +163,7 @@ namespace PZL.Core
 
         private void ProcessPause()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
             {
                 pauseSystem.Unpause();
                 state = PuzzleState.Play;
@@ -135,7 +183,7 @@ namespace PZL.Core
 
         private PieceSet ConstructNextPieceSet()
         {
-            PieceSet nextPieceSet = pieceQueue.RetrieveNextPieceSet(gamePieces);
+            PieceSet nextPieceSet = pieceQueue.RetrieveNextPieceSet(gamePieces, customPacks.CurrentSkin);
             for (int i = 0; i < nextPieceSet.Pieces.Length; i++)
             {
                 nextPieceSet.Pieces[i].GetComponent<SpriteRenderer>().sortingOrder = nextPieceSet.Pieces.Length - i;

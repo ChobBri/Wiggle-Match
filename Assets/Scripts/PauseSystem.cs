@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PZL.Core;
 using PZL.Controls;
+using UnityEngine.SceneManagement;
 
 public class PauseSystem : MonoBehaviour
 {
@@ -46,5 +47,11 @@ public class PauseSystem : MonoBehaviour
         pieceQueue.GetComponent<SpriteRenderer>().sortingLayerName = "Board";
         levelInfoBorderSprite.sortingLayerName = "Board";
         backgroundSprite.sortingLayerName = "Background";
+    }
+
+    public void ExitToMainMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Main Menu");
     }
 }

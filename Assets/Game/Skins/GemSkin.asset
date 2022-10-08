@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1719105bbc213b43a0b70987594546e, type: 3}
+  m_Name: GemSkin
+  m_EditorClassIdentifier: 
+  skinPackName: Gems
+  redBlockSkin: {fileID: -1557904419, guid: 937ce7d369a30f44e85155d79bc680f5, type: 3}
+  greenBlockSkin: {fileID: -892868380, guid: 937ce7d369a30f44e85155d79bc680f5, type: 3}
+  yellowBlockSkin: {fileID: 348280598, guid: 937ce7d369a30f44e85155d79bc680f5, type: 3}
+  blueBlockSkin: {fileID: 1044690438, guid: 937ce7d369a30f44e85155d79bc680f5, type: 3}
+  redStaticBlockSkin: {fileID: -930088497, guid: 937ce7d369a30f44e85155d79bc680f5, type: 3}
+  greenStaticBlockSkin: {fileID: -501312771, guid: 937ce7d369a30f44e85155d79bc680f5, type: 3}
+  yellowStaticBlockSkin: {fileID: 149009772, guid: 937ce7d369a30f44e85155d79bc680f5, type: 3}
+  blueStaticBlockSkin: {fileID: 1426182342, guid: 937ce7d369a30f44e85155d79bc680f5, type: 3}

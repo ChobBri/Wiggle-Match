@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1719105bbc213b43a0b70987594546e, type: 3}
+  m_Name: PuyoSkin
+  m_EditorClassIdentifier: 
+  skinPackName: Puyo
+  redBlockSkin: {fileID: -81871458, guid: 3e27be1a96dd3d54a97c137a07b7f0cd, type: 3}
+  greenBlockSkin: {fileID: -1812832668, guid: 3e27be1a96dd3d54a97c137a07b7f0cd, type: 3}
+  yellowBlockSkin: {fileID: 2027545353, guid: 3e27be1a96dd3d54a97c137a07b7f0cd, type: 3}
+  blueBlockSkin: {fileID: 1592828291, guid: 3e27be1a96dd3d54a97c137a07b7f0cd, type: 3}
+  redStaticBlockSkin: {fileID: 835098270, guid: 3e27be1a96dd3d54a97c137a07b7f0cd, type: 3}
+  greenStaticBlockSkin: {fileID: -1262397068, guid: 3e27be1a96dd3d54a97c137a07b7f0cd, type: 3}
+  yellowStaticBlockSkin: {fileID: 305738340, guid: 3e27be1a96dd3d54a97c137a07b7f0cd, type: 3}
+  blueStaticBlockSkin: {fileID: 1069071940, guid: 3e27be1a96dd3d54a97c137a07b7f0cd, type: 3}
