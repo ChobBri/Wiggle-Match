@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1719105bbc213b43a0b70987594546e, type: 3}
   m_Name: DefaultSkin
   m_EditorClassIdentifier: 
-  skinPackName: ChobBri (Default)
+  skinPackName: Block (Default)
   redBlockSkin: {fileID: 21300000, guid: 465353b12008a24488280888ba295632, type: 3}
   greenBlockSkin: {fileID: 21300000, guid: e6cf315a1bbfc86498f3650e4532e0f9, type: 3}
   yellowBlockSkin: {fileID: 21300000, guid: f9ad7c056526aa848b9f36b09f29494d, type: 3}
