@@ -15,7 +15,6 @@ public class MusicPlayer : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        SceneManager.activeSceneChanged += PlayLevelMusic;
     }
 
     void Start()
@@ -25,6 +24,12 @@ public class MusicPlayer : MonoBehaviour
     public void PlayLevelClearJingle()
     {
         audioSource.clip = levelClearJingle;
+        audioSource.Play();
+        audioSource.loop = false;
+    }
+    public void PlayLevelClearJingle(AudioClip audioClip)
+    {
+        audioSource.clip = audioClip;
         audioSource.Play();
         audioSource.loop = false;
     }
@@ -53,6 +58,14 @@ public class MusicPlayer : MonoBehaviour
         audioSource.Pause();
     }
 
+    public void SetBGMClip(AudioClip audioClip)
+    {
+        backgroundMusic = audioClip;
+        audioSource.clip = backgroundMusic;
+        audioSource.Play();
+        audioSource.loop = true;
+    }
+
     void PlayLevelMusic(Scene prevScene, Scene currScene)
     {
         audioSource.clip = backgroundMusic;
@@ -62,7 +75,6 @@ public class MusicPlayer : MonoBehaviour
 
     private void OnDestroy()
     {
-        SceneManager.activeSceneChanged -= PlayLevelMusic;
     }
 
 }

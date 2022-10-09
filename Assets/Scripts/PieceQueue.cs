@@ -15,7 +15,7 @@ namespace PZL.Core
             grid = GetComponent<Grid>();
         }
 
-        public void InitFill(GameObject[] gamePieces, Skin skin)
+        public void InitFill(GameObject[] gamePieces, SkinPack skin)
         {
             for (int j = 0; j < pieceQueue.Length; j++)
             {
@@ -29,7 +29,7 @@ namespace PZL.Core
             return pieceQueue[0] != null;
         }
 
-        public PieceSet RetrieveNextPieceSet(GameObject[] gamePieces, Skin skin)
+        public PieceSet RetrieveNextPieceSet(GameObject[] gamePieces, SkinPack skin)
         {
             PieceSet nextPieceSet = pieceQueue[0];
             for (int i = 1; i < pieceQueue.Length; i++)
@@ -40,26 +40,26 @@ namespace PZL.Core
             return nextPieceSet;
         }
 
-        private void ApplySkin(Skin skin, Piece piece)
+        private void ApplySkin(SkinPack skin, Piece piece)
         {
             switch (piece.Color)
             {
                 case PieceColor.Red:
-                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.redStaticBlockSkin : skin.redBlockSkin;
+                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.RedStaticBlockSkin : skin.RedBlockSkin;
                     break;
                 case PieceColor.Green:
-                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.greenStaticBlockSkin : skin.greenBlockSkin;
+                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.GreenStaticBlockSkin : skin.GreenBlockSkin;
                     break;
                 case PieceColor.Yellow:
-                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.yellowStaticBlockSkin : skin.yellowBlockSkin;
+                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.YellowStaticBlockSkin : skin.YellowBlockSkin;
                     break;
                 case PieceColor.Blue:
-                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.blueStaticBlockSkin : skin.blueBlockSkin;
+                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.BlueStaticBlockSkin : skin.BlueBlockSkin;
                     break;
             }
         }
 
-        private PieceSet CreatePieceSet(GameObject[] gamePieces, Skin skin, int queuePosition = 0)
+        private PieceSet CreatePieceSet(GameObject[] gamePieces, SkinPack skin, int queuePosition = 0)
         {
             Piece[] pieceSetPieces = new Piece[3];
 

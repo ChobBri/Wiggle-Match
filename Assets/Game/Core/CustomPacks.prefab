@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5084428104382512908}
   - component: {fileID: -5596767119359650474}
   m_Layer: 0
-  m_Name: SkinPacks
+  m_Name: CustomPacks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,3 +48,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2d46aac238d8e9b4e8975f8a054e1cf8, type: 2}
   - {fileID: 11400000, guid: 7caae5c4ab59432439cc0dd627d386d3, type: 2}
   - {fileID: 11400000, guid: af59f28e36ebb124d856845800c40a39, type: 2}
+  musics:
+  - {fileID: 11400000, guid: c0b1b197e44b1e44283c5b4d7e4709df, type: 2}
+  - {fileID: 11400000, guid: 193c42c6f2ddf004a95263de8a87786f, type: 2}

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PuyoSkin
   m_EditorClassIdentifier: 
   skinPackName: Puyo
+  artist: NotMe
   redBlockSkin: {fileID: -81871458, guid: 3e27be1a96dd3d54a97c137a07b7f0cd, type: 3}
   greenBlockSkin: {fileID: -1812832668, guid: 3e27be1a96dd3d54a97c137a07b7f0cd, type: 3}
   yellowBlockSkin: {fileID: 2027545353, guid: 3e27be1a96dd3d54a97c137a07b7f0cd, type: 3}

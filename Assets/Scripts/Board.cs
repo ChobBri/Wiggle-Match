@@ -35,7 +35,7 @@ namespace PZL.Core
             
         }
 
-        public void ApplySkin(Skin skin)
+        public void ApplySkin(SkinPack skin)
         {
             int length = piecesTransform.childCount;
             for (int i = 0; i < length; i++)
@@ -44,16 +44,16 @@ namespace PZL.Core
                 switch (piece.Color)
                 {
                     case PieceColor.Red:
-                        piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.redStaticBlockSkin : skin.redBlockSkin;
+                        piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.RedStaticBlockSkin : skin.RedBlockSkin;
                         break;
                     case PieceColor.Green:
-                        piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.greenStaticBlockSkin : skin.greenBlockSkin;
+                        piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.GreenStaticBlockSkin : skin.GreenBlockSkin;
                         break;
                     case PieceColor.Yellow:
-                        piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.yellowStaticBlockSkin : skin.yellowBlockSkin;
+                        piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.YellowStaticBlockSkin : skin.YellowBlockSkin;
                         break;
                     case PieceColor.Blue:
-                        piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.blueStaticBlockSkin : skin.blueBlockSkin;
+                        piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.BlueStaticBlockSkin : skin.BlueBlockSkin;
                         break;
                 }
                 

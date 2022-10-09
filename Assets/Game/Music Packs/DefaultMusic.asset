@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eda13a78713ea34a88e0ab57a1594dd, type: 3}
+  m_Name: DefaultMusic
+  m_EditorClassIdentifier: 
+  musicPackName: ChobBri's Music Pack
+  artist: ChobBri
+  bgm1: {fileID: 8300000, guid: 65e929312813c4c409b9848ee21c488f, type: 3}
+  bgm2: {fileID: 8300000, guid: df069de7c8e90914bb8e2af3eaf37142, type: 3}
+  bgm3: {fileID: 8300000, guid: 33777f6ef86b9154abbdf0dab7ebb4a6, type: 3}
+  levelClear: {fileID: 8300000, guid: c53b65f994bf04b4c815dc3d83198640, type: 3}
+  levelClearTime: 5

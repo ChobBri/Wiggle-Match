@@ -45,9 +45,24 @@ namespace PZL.Core
         {
             mover.OnPieceCollision += ProcessPieceClear;
 
-            Skin skin = customPacks.CurrentSkin;
+            SkinPack skin = customPacks.CurrentSkin;
 
             ApplySkin(skin);
+
+            int levelNum = (levelNumber.Number - 1) / 5;
+            switch (levelNum)
+            {
+                case 0:
+                    musicPlayer.SetBGMClip(customPacks.CurrentMusic.BGM1);
+                    break;
+                case 1:
+                    musicPlayer.SetBGMClip(customPacks.CurrentMusic.BGM2);
+                    break;
+                case 2:
+                    musicPlayer.SetBGMClip(customPacks.CurrentMusic.BGM3);
+                    break;
+            }
+            
 
             yield return new WaitForSeconds(1.0f);
 
@@ -58,32 +73,32 @@ namespace PZL.Core
             pieceQueue.InitFill(gamePieces, skin);
         }
 
-        private void ApplySkin(Skin skin)
+        private void ApplySkin(SkinPack skin)
         {
 
-            gamePieces[0].GetComponent<SpriteRenderer>().sprite = skin.redBlockSkin;
-            gamePieces[1].GetComponent<SpriteRenderer>().sprite = skin.greenBlockSkin;
-            gamePieces[2].GetComponent<SpriteRenderer>().sprite = skin.yellowBlockSkin;
-            gamePieces[3].GetComponent<SpriteRenderer>().sprite = skin.blueBlockSkin;
+            gamePieces[0].GetComponent<SpriteRenderer>().sprite = skin.RedBlockSkin;
+            gamePieces[1].GetComponent<SpriteRenderer>().sprite = skin.GreenBlockSkin;
+            gamePieces[2].GetComponent<SpriteRenderer>().sprite = skin.YellowBlockSkin;
+            gamePieces[3].GetComponent<SpriteRenderer>().sprite = skin.BlueBlockSkin;
 
             board.ApplySkin(skin);
         }
 
-        private void ApplySkin(Skin skin, Piece piece)
+        private void ApplySkin(SkinPack skin, Piece piece)
         {
             switch (piece.Color)
             {
                 case PieceColor.Red:
-                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.redStaticBlockSkin : skin.redBlockSkin;
+                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.RedStaticBlockSkin : skin.RedBlockSkin;
                     break;
                 case PieceColor.Green:
-                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.greenStaticBlockSkin : skin.greenBlockSkin;
+                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.GreenStaticBlockSkin : skin.GreenBlockSkin;
                     break;
                 case PieceColor.Yellow:
-                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.yellowStaticBlockSkin : skin.yellowBlockSkin;
+                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.YellowStaticBlockSkin : skin.YellowBlockSkin;
                     break;
                 case PieceColor.Blue:
-                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.blueStaticBlockSkin : skin.blueBlockSkin;
+                    piece.GetComponent<SpriteRenderer>().sprite = piece.IsStatic ? skin.BlueStaticBlockSkin : skin.BlueBlockSkin;
                     break;
             }
         }
@@ -95,6 +110,31 @@ namespace PZL.Core
 
         private void Update()
         {
+#if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.Slash))
+            {
+                    EndLevel();
+            }
+            if (Input.GetKeyDown(KeyCode.Period))
+            {
+                if(levelNumber.Number != 15)
+                {
+                    int bInd = SceneManager.GetActiveScene().buildIndex;
+                    bInd += 1;
+                    SceneManager.LoadScene(bInd);
+                }
+                
+            }
+            if (Input.GetKeyDown(KeyCode.Comma))
+            {
+                if (levelNumber.Number != 1)
+                {
+                    int bInd = SceneManager.GetActiveScene().buildIndex;
+                    bInd -= 1;
+                    SceneManager.LoadScene(bInd);
+                }
+            }
+#endif
             switch (state)
             {
                 case PuzzleState.Play:
@@ -235,9 +275,9 @@ namespace PZL.Core
         private void EndLevel()
         {
             state = PuzzleState.Complete;
-            musicPlayer.PlayLevelClearJingle();
+            musicPlayer.PlayLevelClearJingle(customPacks.CurrentMusic.LevelClear);
             ScoreRecord.totalSeconds += levelTimer.Seconds;
-            StartCoroutine(TransitionToNextLevel(5.0f));
+            StartCoroutine(TransitionToNextLevel(customPacks.CurrentMusic.LevelClearTime));
             levelTimer.IsTimerRunning = false;
         }
 

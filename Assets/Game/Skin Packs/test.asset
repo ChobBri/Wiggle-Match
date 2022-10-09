@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1719105bbc213b43a0b70987594546e, type: 3}
   m_Name: test
   m_EditorClassIdentifier: 
-  skinPackName: Blub
+  skinPackName: NotMe's Skin Pack
+  artist: NotMe
   redBlockSkin: {fileID: -222449574, guid: 3e27be1a96dd3d54a97c137a07b7f0cd, type: 3}
   greenBlockSkin: {fileID: -595774048, guid: 3e27be1a96dd3d54a97c137a07b7f0cd, type: 3}
   yellowBlockSkin: {fileID: 100603070, guid: 3e27be1a96dd3d54a97c137a07b7f0cd, type: 3}

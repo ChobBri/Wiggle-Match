@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class CustomPacks : MonoBehaviour
 {
-    [SerializeField] Skin[] skins;
+    [SerializeField] SkinPack[] skins;
+    [SerializeField] MusicPack[] musics;
 
     public static int skinIndex = 0;
-    public Skin CurrentSkin { 
+    public static int musicIndex = 0;
+    public SkinPack CurrentSkin { 
         get { 
             skinIndex = skinIndex < skins.Length ? skinIndex : 0;
             return skins[skinIndex]; 
@@ -32,8 +34,30 @@ public class CustomPacks : MonoBehaviour
         }
     }
 
-    private void Update()
+    public MusicPack CurrentMusic
     {
-        
+        get
+        {
+            musicIndex = musicIndex < musics.Length ? musicIndex : 0;
+            return musics[musicIndex];
+        }
+    }
+
+    public void IncrementMusicIndex()
+    {
+        musicIndex++;
+        if (musicIndex >= musics.Length)
+        {
+            musicIndex = 0;
+        }
+    }
+
+    public void DecrementMusicIndex()
+    {
+        musicIndex--;
+        if (musicIndex < 0)
+        {
+            musicIndex = musics.Length - 1;
+        }
     }
 }

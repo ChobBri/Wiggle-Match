@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: GemSkin
   m_EditorClassIdentifier: 
   skinPackName: Gems
+  artist: NotMe
   redBlockSkin: {fileID: -1557904419, guid: 937ce7d369a30f44e85155d79bc680f5, type: 3}
   greenBlockSkin: {fileID: -892868380, guid: 937ce7d369a30f44e85155d79bc680f5, type: 3}
   yellowBlockSkin: {fileID: 348280598, guid: 937ce7d369a30f44e85155d79bc680f5, type: 3}
